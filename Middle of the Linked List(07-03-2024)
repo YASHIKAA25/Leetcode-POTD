@@ -1,0 +1,41 @@
+//Method:
+//Initialization: Point both of your fast and slow pointers toward the top of the list.
+//Traversal: Take one step at a time with the slow pointer and two steps at a time with the fast pointer. This guarantees that the slow pointer will be at the middle node when the fast pointer reaches the end of the list.
+//Locate the Middle Node: The slow pointer will be at the list's middle node following traversal.
+//Edge Case Handling: Determine whether there is a single node or if the list is empty. The head itself serves as the intermediary node in these situations.
+//Return: As the middle node, return the node that the slow pointer was pointing to.
+
+//cpp code: Approach 1: 
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+       if(head == NULL || head->next == NULL)return head;
+        ListNode* fast=head->next;
+        ListNode* slow=head;
+
+        while(fast != NULL){
+            fast = fast->next;
+            if(fast != NULL)fast = fast->next;
+
+            slow = slow->next;
+        }
+
+        return slow;
+    }
+};
+
+//cpp code: approach 2:
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slowPointer = head;
+        ListNode* fastPointer = head;
+
+        while (fastPointer != nullptr && fastPointer->next != nullptr) {
+            slowPointer = slowPointer->next;
+            fastPointer = fastPointer->next->next;
+        }
+
+        return slowPointer;
+    }
+};
