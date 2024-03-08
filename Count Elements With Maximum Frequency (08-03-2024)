@@ -1,0 +1,26 @@
+//Complexity
+//Time complexity: O(n)
+//Space complexity: O(1)
+
+//cpp code
+
+//Method:
+//1) Set up variables for the maximum frequency (maxFreq) and answer (ans), and create an array count to hold the count of each number.
+//2) Increase the count of each number in the count array as you iterate through the input array. 
+//3) Determine the count array's maximum frequency for each and every number. 
+//4) Repeatedly iterate through the input array, counting the integers with the highest frequency. 
+//5) Provide the number count that has the highest frequency.
+
+class Solution {
+public:
+    int maxFrequencyElements(vector<int>& nums) {
+        int ans = 0;
+        int maxFreq = numeric_limits<int>::min();
+        vector<int> count(101, 0);
+
+        for (int num : nums) count[num]++;
+        for (int num : count) maxFreq = max(maxFreq, num);        
+        for (int num : nums) if (maxFreq == count[num]) ans++;
+        return ans;
+    }
+};
