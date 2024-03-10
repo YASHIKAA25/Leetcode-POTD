@@ -1,0 +1,25 @@
+//Intuition: A hash map can be very effective when attempting to find the intersection of two arrays.
+//The counts of each element in an array can be iterated through and stored in a hash map.
+//Next, we loop over each element in the second array to see if it is present in the hash map.
+//If so, we take it out of the hash map and add it to the result vector.
+
+// cpp code
+
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums2.size();
+        vector<int>solution;
+        unordered_map<int,int>map;
+        for(auto &num : nums1){
+            map[num]++;
+        }
+        for(auto & num : nums2){
+            if(map.find(num) != map.end()){
+                solution.push_back(num);
+                map.erase(num);
+            }
+        }
+        return solution;
+    }
+};
