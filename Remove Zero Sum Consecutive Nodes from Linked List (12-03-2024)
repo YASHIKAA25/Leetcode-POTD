@@ -1,0 +1,45 @@
+//Approach:
+//1) A value (val) and a reference to the node after it (next) are contained in each node.
+//2) A ListNode named head is entered into the removeZeroSumSublists method, which outputs another ListNode. The updated list is returned after zero-sum sublists are eliminated from the input list.
+//3) The method's initial condition determines whether the head is null. If so, it returns null right away because it indicates the list is empty.
+//4) To control the linked list traversal, two pointers, cur and prev, are initialized. Cur is initially set to the head and prev to null.
+//5) To record the running total of the values of the nodes encountered during the traversal, a variable called running_sum is initialized.
+//6) A while loop is used in the code to traverse over the list until cur is null.
+//7) After the loop completes, it calls removeZeroSumSublists on the following node (head.next) recursively .This step aims to handle any zero-sum sublists present in the rest of the list after the current node.
+//8) Finally, the modified list (head) is returned.
+
+//java code:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeZeroSumSublists(ListNode head) {
+        if(head == null)return head;
+        ListNode prev = null;
+        ListNode cur = head;
+        int  running_sum=0;
+        while(cur!=null)
+        {
+            running_sum += cur.val;
+            if(running_sum==0)
+            {
+                if(prev == null)
+                head = cur.next;
+                else
+                prev.next = cur.next;
+                return removeZeroSumSublists(head);
+            }
+            cur = cur.next;
+        }
+        head.next = removeZeroSumSublists(head.next);
+        return head;
+    }
+}
