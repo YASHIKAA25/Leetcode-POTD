@@ -1,0 +1,21 @@
+//Explanation:
+//1) The pivotInteger function of the class Solution is defined in the code. This function returns an integer after receiving an integer, n, as input.
+//2) Pivot Integer Calculation: This involves finding the square root of (n * (n + 1)) / 2. The sum of the integers between 1 and n is found in the expression (n * (n + 1)) / 2. The variable ans contains the square root of this total. 
+//3) Verifying the Outcome: The value of ans is copied to temp .
+//4) Converting to Integer: This line contains the result of converting the double number temp into an integer in temp2. We take this action in order to verify that ans is, in fact, an integer. If so, temp2 ought to be equivalent to ans.
+//5) Verifying if the Outcome is an integer: This condition determines whether or not ans equals temp2. It indicates that ans is an integer if they are equal. The method then returns temp2, which is ans's integer value.
+//6) Giving back -1 in the event that Not an Integer: An integer is not present if it is not equal to temp2. In this instance, the procedure returns -1 to signify that the supplied input n does not include a pivot integer.
+
+//java code
+
+class Solution {
+    public int pivotInteger(int n) {
+        double ans=Math.sqrt((n*(n+1))/2);
+        double temp=ans;
+        int temp2=(int)temp; 
+        if(ans==temp2){
+            return temp2;
+        }
+        return -1;
+    }
+}
