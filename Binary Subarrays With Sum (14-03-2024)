@@ -1,0 +1,30 @@
+//java code
+//Explanation:
+//1)  The main method of the Solution class takes an array of integers nums and an integer goal as parameters. It returns the number of contiguous subarrays within nums that sum up to goal.
+//2)  The atMost method determines how many subarrays have a sum that is at most equal to the objective. It's an auxiliary function that numSubarraysWithSum uses. It requires an integer goal and an array of integers nums, the same parameters as numSubarraysWithSum. When an integer is returned, it indicates how many subarrays have sums that are at most equal to the target.
+//3) The number of subarrays with sum at most goal - 1 is subtracted from the total number of subarrays with sum at most goal in the return line to arrive at the final result. In essence, this provides the number of subarrays with sum.
+//4) There are four declared variables in the atMost method. The sliding window's current front and rear indices are indicated by the head and tail of the pointer. 
+//5) The nums array is iterated through by the for loop. It advances the head pointer by one step throughout each cycle.
+//6)  The value at the current head index is added to the sum inside the loop.
+//7) If the current sum is more than the target, the while loop is in charge of reducing the window's left side. As long as the amount exceeds the objective, it advances the tail pointer.
+//8) Inside the while loop, it subtracts the value at the tail index from the sum and moves the tail pointer forward.
+//9) It counts the number of subarrays that finish at the current head index and adds it to the result after modifying the window size. The count is determined by adding one to the difference between the head and tail.
+//10) Lastly, it returns the result, which is the number of subarrays whose total is at most equal to the objective.
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return atMost(nums, goal) - atMost(nums, goal - 1);
+    }
+    private int atMost(int[] nums, int goal) {
+        int head, tail = 0, sum = 0, result = 0;
+        for (head = 0; head < nums.length; head++) {
+            sum += nums[head];
+            while (sum > goal && tail <= head) {
+                sum -= nums[tail];
+                tail++;
+            }
+            result += head - tail + 1;
+        }
+        return result;
+    }
+}
