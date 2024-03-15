@@ -1,0 +1,29 @@
+//Explanation:
+//1) A class called Solution is defined in the code, and its public member function productExceptSelf is part of it. This method returns a vector of integers after receiving as a parameter a reference to a vector of integers called nums.
+//2) The function initializes a vector output, which will hold the outcome. In order to store the size of the input vector nums, an integer n is additionally initialized.
+//3) Calculate Products to the Left: Next, the code sets the output vector's first element's starting value to 1. The elements of the input vector nums are then iterated over from index 1 to n. It computes the product of all elements to the left of the current element in numbers for each iteration, then puts the result in the output vector.
+//4)After calculating products to the left in the initial pass, the code initializes a variable to 1. It then iterates backward through the input vector, updating each element in the output vector by multiplying it with the variable representing the product of elements to the right. It also updates this variable by multiplying it with the current element in the input vector.
+//5) The output vector includes the product of every element except the one at the corresponding index once the second pass is finished. The pop_back() function is used to delete the last element of the output, which is the product of all items to the right of the last element in nums and is therefore not necessary. 
+//6) The function then returns the output vector, which has the intended outcome in it.
+
+
+//cpp code
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int> output;
+        int n=nums.size();
+        output.push_back(1);
+        for(int i=1;i<=n;i++){
+            output.push_back(output[i-1]*nums[i-1]);
+        }
+        int right=1;
+        for(int i=n-1;i>=0;i--){
+            output[i]*=right;
+            right*=nums[i];
+        }
+        output.pop_back();
+        return output;
+    }
+};
