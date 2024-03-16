@@ -1,0 +1,39 @@
+//Explanation:
+//1) The definition of a class called Solution opens the code.
+//2) There is a public member method in the class called findMaxLength.
+//3) It accepts a single argument, which is a pointer to the nums vector of integers.
+//4) The length of the longest contiguous subarray with an equal number of 0s and 1s is returned as an integer.
+//5) Several variables are initialized within the findMaxLength function:
+//-> n: Holds the input vector nums's size in memory.
+//-> mp: An unordered map, often known as a hash map, in which the index is the value and the running sum is the key.
+//-> sum: With a starting value of 0, this variable shows the running total of all the elements found in the nums array.
+//-> subArray length: With an equal number of 0s and 1s, this variable, which has an initial value of 0, holds the length of the longest contiguous subarray.
+//6) The nums array's elements are iterated through using a for loop. Every element nums[i] causes the sum variable to be updated:
+//-> The sum is increased by -1 if nums[i] is 0, and increased by 1 otherwise.
+//-> Next, it verifies that there are an equal number of 0s and 1s in the subarray from the start to the current index I if the sum equals 0. It updates subArray_length to i + 1 in this instance.
+//-> If the sum is already in the mp (unordered map), then there are an equal number of 0s and 1s in the subarray between the current index (i) and the index that is stored in the map for this sum. Here, it sets subArray_length to the maximum of i - mp[sum] and its current value. 
+//-> If not, the current sum and its matching index i are stored in the mp. 
+//7) The length of the longest contiguous subarray with an equal number of 0s and 1s is finally returned as subArray_length.
+
+//cpp code
+
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        int n = nums.size();
+        unordered_map<int, int> mp;
+        int sum = 0;
+        int subArray_length = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i] == 0 ? -1 : 1; 
+            if (sum == 0) {
+                subArray_length = i + 1;
+            } else if (mp.find(sum) != mp.end()) {
+                subArray_length = max(subArray_length, i - mp[sum]);
+            } else {
+                mp[sum] = i;
+            }
+        }
+        return subArray_length;
+    }
+};
