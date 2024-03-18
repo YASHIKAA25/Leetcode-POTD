@@ -1,0 +1,35 @@
+//Explanation:
+//1) Function Definition: This function returns an integer that represents the bare minimum of arrows required to bust every balloon when it receives as input a vector of vectors of integers (points).
+//2) Sorting the Points: The first element of each sub-vector is used to determine the order of the points vector in this line. The points are sorted according to their starting positions, meaning that the sorting is done in ascending order.
+//3) Initializing Variables: arrows is set to 1 since an arrow is necessary even in the event that there is only one balloon. The first balloon's end position—that is, the balloon with the smallest start position—is initialized at end.
+//4) Looping through Points: Since the first element was used to initialize the variables, this loop iterates through the sorted points vector, beginning with the second element (i = 1).
+//5) Examining for Overlap:
+//-> An additional arrow is needed and the arrows are increased if the current balloon's start location is greater than its end position, indicating that there is no overlap. The end position of the current balloon is modified to reflect the new end position.
+//-> The end position is updated to the lowest of the current end position and the end position of the current balloon if there is an overlap. This guarantees that every balloon inside the overlap area will be burst by the arrow.
+//6) Lastly, the function yields the bare minimum of arrows needed to pop every balloon.
+
+//cpp code
+
+
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        std::sort(points.begin(), points.end(), [](const auto& a, const auto& b) {
+            return a[0] < b[0];
+        });
+
+        int arrows = 1;
+        int end = points[0][1];
+
+        for (size_t i = 1; i < points.size(); ++i) {
+            if (points[i][0] > end) {
+                arrows++;
+                end = points[i][1];
+            } else {
+                end = std::min(end, points[i][1]);
+            }
+        }
+
+        return arrows;
+    }
+};
