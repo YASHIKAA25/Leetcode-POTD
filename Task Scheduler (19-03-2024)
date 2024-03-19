@@ -1,0 +1,29 @@
+//Explanation:
+//1) Class Definition: This code defines a class named Solution with a public member function leastInterval. This function takes two parameters:
+//-> tasks: A vector of characters representing tasks.
+//-> n: An integer representing the cooldown period n.
+//2) Calculation of Frequency: The code in this part initializes a 26-by-26 array called freq, which will hold the frequency of each job. The frequency count for each job is increased as iteratively across the tasks vector. The character task is converted to an index in the frequency array via the expression task - 'A'.
+//3) Frequency Sorting: The frequencies are sorted in ascending order by the code. This phase of sorting is necessary for additional computations.
+//4) Idle Time Calculation: The number of chunks is the first step in the code's calculation of idle time. Subtracting 1 from the maximum frequency task defines a "chunk". This section shows how long it took to complete every task but the last one. chunk * n, where n is the cooldown duration, is how the idle time is computed.
+//5) Changing Idle Time: This loop's code subtracts the minimum of the chunk size and the frequency of each task—aside from the task with the highest frequency—from the overall idle time. By taking this step, you can be confident that the idle time is accurately adjusted according to the real job frequency.
+//6) Lastly, the code outputs the bare minimum of intervals needed to complete every activity. The size of the jobs vector is returned if the calculated idle time is less than zero, which indicates that there is no idle time. If not, it returns the total of the adjusted idle time plus the tasks vector's size.
+
+// cpp code
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int freq[26] = {0};
+        for(char task : tasks){
+            freq[task - 'A']++;
+
+        }
+        sort(begin(freq) , end(freq));
+        int chunk = freq[25] -1;
+        int idel = chunk * n;
+        for(int i = 24; i>= 0 ; i--){
+            idel -= min(chunk, freq[i]);
+        }
+        return idel < 0 ? tasks.size() : tasks.size() + idel;
+    }
+};
