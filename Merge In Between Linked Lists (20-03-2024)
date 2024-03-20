@@ -1,0 +1,48 @@
+//Explanation:
+//1) Four arguments are required by the function mergeInBetween: list1, a, b, and list2. Between places a and b (inclusive) in list1, it combines list2 into list1.
+//2) In order to access the node at location a, it initializes a pointer ptr to traverse list 1.
+//3) Ptr is then moved to the node that comes right before the ath node.
+//4) It keeps the following ptr node in qtr.
+//5) To locate the node at location b, it traverses the b - a + 1 nodes from the ath node.
+//6) The node before an is now pointed to by ptr, and the node after b is pointed to by qtr.
+//7) It links the pointer to list 2's head.
+//8) To locate its final node, it searches list 2.
+//9) It connects the last node of list2 to the node after b (i.e., qtr).
+//10) Finally, it returns the modified list1.
+
+//cpp code
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
+        ListNode* ptr = list1;
+        for(int i= 0 ; i< a-1; ++i){
+            ptr = ptr->next;
+        }
+
+        ListNode* qtr = ptr-> next;
+        for(int i = 0; i < b - a + 1 ; ++i){
+            qtr = qtr-> next;
+        }
+        ptr->next = list2;
+
+        while(list2->next){
+            list2 = list2->next;
+        }
+        list2->next= qtr;
+
+
+        return list1;
+    }
+};
