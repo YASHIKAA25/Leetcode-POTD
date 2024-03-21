@@ -1,0 +1,51 @@
+//Explanation:
+//1)Class Definition: A class called Solution is defined in the code.
+//2) Reversing a linked list is the goal of the reverseList function. It accepts as input (ListNode* head), a pointer to the linked list's head. A pointer to the head of the inverted list (ListNode*) is returned as a result.
+//3) Variable Declaration:
+//NextNode and prevNode, two pointers of type ListNode*, are declared. The initial value of prevNode is NULL.
+//4) Reversing the Linked List: A while loop iterates over the linked list until head becomes NULL.
+//-> Inside the loop:
+//a. The value head->next is applied to nextNode. The subsequent node in the first list is now stored.
+//b. head->next is assigned prevNode. This effectively reverses the link direction, making the current node point to the previous node.
+//c. prevNode is updated to head, which moves one step ahead in the list.
+//d. head is updated to nextNode, moving to the next node in the original list.
+//5) Return Statement:
+//After the loop exits, prevNode points to the new head of the reversed list. 
+
+
+//cpp code
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+ class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *nextNode, *prevNode = NULL;
+        while (head) {
+            nextNode = head->next;
+            head->next = prevNode;
+            prevNode = head;
+            head = nextNode;
+        }
+        return prevNode;
+    }
+};
