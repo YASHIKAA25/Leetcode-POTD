@@ -1,0 +1,68 @@
+//Explanation:
+//1) Definition of ListNode: First, the definition of a singly linked list node. It includes the struct node ListNode with three members: val , storing the node value, next , the pointer to the next node, and three constructors to initialize a node. 
+//2) isPalindrome Function: The function that must determine whether a given singly linked list is a palindrome one. It inputs the pointer to the head node ln and outputs the bool value whether the list is palindrome or not. 
+//3) Initialization: Inside the function, three pointers are initialized: slow, fast, and prev. All of them are initially set to the head of the linked list. prev is initialized as NULL.
+//4) Finding Middle and Reversing First Half: After that, the code goes into a loop that goes fast 2 steps and slow one step at a time, until fast reaches the end of the list. At the same time, the first half of the list is reversed, and pointers are manipulated to this end:
+//-> each iteration moves head one step forward;
+//-> slow->next is set to prev, effectively reversing the list up to the current node;
+//-> prev is updated to slow;
+//-> slow is updated to head.
+//5) Count Adjustment for Odd Length: The loop additionally maintains a count of the nodes in the list (cnt). In the event that the count (cnt) is odd, the head is advanced one step in order to bypass the middle element because the list contains an odd number of nodes.
+//6) Similar to a palindrome, the code goes into another loop after locating the midpoint and reversing the first half. The values of the nodes from the middle to the head and previous ends of the list are compared in this loop. The list is not a palindrome if any pair of corresponding nodes does not have the same value, as indicated by the response of false. If not, it keeps going until every node is compared.
+//7) Returning Result: If the loop completes without finding any mismatch, it returns true, indicating that the list is a palindrome.
+
+
+//cpp code
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+ 
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = NULL;
+        int cnt = 1;
+        while(fast->next) {
+            fast = fast->next;
+            cnt++;
+            head = head->next;
+            slow->next = prev;
+            prev = slow;
+            slow = head;
+            if(fast->next) {
+                cnt++;
+                fast = fast->next;
+            } 
+        }
+        if(cnt%2 != 0) {
+            head = head->next;
+        }
+        while(head) {
+            if(head->val != prev->val) return false;
+            head = head->next;
+            prev = prev->next;
+        }
+        return true;
+    }
+};
