@@ -1,0 +1,51 @@
+//Explanation:
+//1) A pointer to the first element of a linked list is the input for the method reorderList.
+//2) It first determines whether the head is NULL; if it is, it returns right away.
+//3) Then, starting at the head of the list, it initializes the three pointers, tmp, half, and prev. 
+//4) To determine the list's midway, it employs a two-pointer approach (half pointer).
+//5) The second half of the list is inverted.
+//6) By switching nodes between them, it combines the first and second halves of the list in reverse order.
+//7) Lastly, it disconnects the final node in accordance with whether the original list had an odd number of nodes. 
+
+//cpp code
+
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        if (!head) return; // Check if the head is NULL, return if it is.
+        
+        ListNode *tmp = head, *half = head, *prev = NULL;
+        // Initialize three pointers: tmp, half, and prev. 
+        // They all start from the head of the list.
+
+        // This loop finds the midpoint of the list using two pointers approach.
+        while (tmp->next && tmp->next->next) {
+            tmp = tmp->next->next; // Move tmp two steps forward.
+            half = half->next; // Move half one step forward.
+        }
+        
+        if (tmp->next) half = half->next; // If the list has odd number of nodes, move half one more step.
+        
+        // Reverse the second half of the list.
+        while (half) {
+            tmp = half->next; // Store the next node of half.
+            half->next = prev; // Reverse the link.
+            prev = half; // Move prev to half.
+            half = tmp; // Move half to the next node.
+        }
+        half = prev; // Update half to point to the reversed part.
+        
+        // Merge the first half and reversed second half of the list.
+        while (head && half) {
+            tmp = head->next; // Store the next node of head.
+            prev = half->next; // Store the next node of half.
+            head->next = half; // Link head to half.
+            half->next = tmp; // Link half to tmp.
+            head = tmp; // Move head to the next node.
+            half = prev; // Move half to the next node.
+        }
+        
+        // If the original list had odd number of nodes, the last node needs to be disconnected.
+        if (head && head->next) head->next->next = NULL;
+    }
+};
