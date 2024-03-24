@@ -1,0 +1,46 @@
+//Explanation:
+//1) Function Declaration: 
+//> The function findDuplicate is contained in a class called Solution.
+//> findDuplicate returns an integer in response to a reference to a vector of integers, nums, as its parameter.
+//2) Initialization:
+//> The duplicate number's lowest possible value, 1, is used as the initialization for left.
+//> The initial value of right is nums.size() - 1, which is the duplicate number's maximum value allowed under the condition that each element in nums must be between 1 and nums.size() - 1.
+//3) Binary Search:
+//> As long as left is less than right, a binary search loop is started and will continue.
+//> The value that lies in the nearly between left and right is called mid.
+//4) Counting:
+//> Every element is iterated through in nums using a loop.
+//> For each element num, if it is less than or equal to mid, increment the count.
+//5) Changing Boundaries: 
+//> It is assumed that duplicate elements exist in the range [1, mid] if the count (the number of elements less than or equal to mid) is larger than mid. > Adjust accordingly to mid. 
+//> Adjust left to mid + 1 if count is not more than mid, since the duplication is in the interval [mid+1, n].
+//6) Result: Since left contains the duplicate value, it is returned as the result after the binary search is complete (left becomes equal to right).
+
+//cpp code
+
+class Solution {
+public:
+    int findDuplicate(std::vector<int>& nums) {
+        int left = 1;
+        int right = nums.size() - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int count = 0;
+
+            for (int num : nums) {
+                if (num <= mid) {
+                    count++;
+                }
+            }
+            
+            if (count > mid) {
+                right = mid;
+            } else { 
+                left = mid + 1;
+            }
+        }
+
+        return left;
+    }
+};
