@@ -1,0 +1,36 @@
+//Explanation:
+//1) The function findDuplicates returns a vector with the duplicate items it detected in the input vector after receiving a reference to a vector of integers, nums, as input.
+//2) It stores the duplicates discovered in the input vector and initializes an empty vector.
+//3) It determines and stores in the variable n the size of the input vector nums.
+//4) It uses a for loop to traverse through each element of the input vector.
+//5) Inside the loop, it takes the absolute value of the current element and stores it in the variable x. This is done to handle negative numbers correctly.
+//6) It determines whether the input vector nums's element at index x-1 is already negative. If it is negative, it indicates a duplicate because x has already happened in the vector. 
+//7) The element at index x-1 adds x to the ans vector if it is negative. 
+//8) It multiplies x by -1 to identify the element at index x-1 as negative, regardless of whether x is a duplicate. The purpose of this is to maintain track of the components that have appeared in the input vector. 
+//9) The function returns the vector and all duplicate elements discovered during the iteration after going over every element in the input vector.
+
+
+// cpp code
+
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        vector<int> ans; // Initialize an empty vector to store the duplicates
+        int n = size(nums); // Get the size of the input vector
+        
+        // Iterate through each element of the input vector
+        for(int i = 0; i < n; i++) {
+            int x = abs(nums[i]); // Get the absolute value of the current element
+            
+            // If the element at index x-1 in the vector is already negative, it means x is a duplicate
+            if(nums[x - 1] < 0) {
+                ans.push_back(x); // Add x to the answer vector
+            }
+            
+            // Mark the element at index x-1 as negative to indicate that it has occurred once
+            nums[x - 1] *= -1;
+        }
+        
+        return ans; // Return the vector containing duplicates
+    }
+};
