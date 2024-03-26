@@ -1,0 +1,38 @@
+//Explanation:
+//1) Class Definition: The Solution class definition is the first one. Perhaps, this class has a way to identify the vector's first missing positive integer.
+//2) Method Definition: The firstMissingPositive method is located inside the class Solution. This function returns an integer after receiving as input a reference to a vector of integers (vector& nums).
+//3) Initialization: An integer called i is initialized to 0 within the firstMissingPositive method. This will be utilized as a guide to go through the vector numbers.
+//4) Looping through the Vector: When the value of i falls below the vector's size, the function goes into a while loop.
+//5) Swapping Elements: An if condition in the while loop verifies three things:
+//> If the current number (nums[i]) is positive and not greater than the size of the vector (nums[i] > 0 && nums[i] <= nums.size()).
+//> If the number is at its correct position in the vector (if nums[nums[i]-1] is not equal to nums[i]).
+//> If these conditions are met, it swaps the current number (nums[i]) with the number at its correct position (nums[nums[i]-1]).
+//6) Index incrementing: The vector's next element is reached by increasing index i in the event that the if statement's conditions are not satisfied.
+//7) Identifying the First Missing Positive: A for loop iterates across the vector to identify the first missing positive integer after rearranging the items.
+//> Within the loop, it returns i + 1 if the current element does not equal i + 1, indicating that i + 1 is the missing positive integer.
+//> When the vector contains every positive integer between 1 and nums.size(), the loop ends without producing any results.
+//8) If the loop completes without finding a missing positive integer, it returns nums.size() + 1, indicating that all positive integers from 1 to nums.size() are present in the vector, and the next missing positive integer is nums.size() + 1.
+
+//cpp code
+
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int i = 0;
+        while(i<nums.size()){
+            if(nums[i] > 0 && nums[i] <= nums.size() && nums[nums[i]-1] != nums[i]){
+                swap(nums[i], nums[nums[i]-1]);
+            }
+            else{
+                i++;
+            }
+        }
+        for (int i = 0; i < nums.size(); i++) {
+            if(nums[i] != i+1){
+                return i+1;
+            }
+        }
+
+        return nums.size() + 1;
+    }
+};
