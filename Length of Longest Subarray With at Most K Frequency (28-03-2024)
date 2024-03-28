@@ -1,0 +1,28 @@
+//Explanation:
+//1) In order to track the count of each integer found in the subarray, it initializes an unordered map mp.
+//2) Variables l (left pointer) and ans (maximum length of the subarray) are set to zero initially.
+//3) It uses a loop to traverse through the nums vector's elements.
+//4) It increases the count of each element nums[i] in the map mp.
+//5) It enters a while loop to modify the left pointer l to decrease the window until the count of all integers in the current subarray becomes less than or equal to k if the count of the current integer, nums[i], exceeds k.
+//6) Starting from the leftmost end of the subarray, the while loop counts the integers encountered earlier until the condition mp[nums[i]] <= k is met.
+//7) It computes the length of the current subarray (i - l + 1) after adjusting the left pointer, and if the length exceeds the current maximum length, it updates ans.
+//8) Once every element in the vector has been processed, it finally delivers the maximum length ans.
+
+//cpp code
+
+class Solution {
+public:
+    int maxSubarrayLength(vector<int>& nums, int k) {
+        unordered_map<int,int> mp;
+        int l=0,ans=0;
+        for(int i=0; i<nums.size(); i++){
+            if(++mp[nums[i]]>k){
+                while(mp[nums[i]]>k&&l<=i){
+                    mp[nums[l++]]--;
+                }
+            }
+            ans = max(ans,i-l+1);
+        }
+        return ans;
+    }
+};
