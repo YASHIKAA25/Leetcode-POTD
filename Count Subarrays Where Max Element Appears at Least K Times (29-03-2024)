@@ -1,0 +1,36 @@
+//Explanation:
+//1) Function Definition: The countSubarrays function requires two parameters:
+//> nums: The array of numbers is represented by a reference to a vector of integers.
+//> k: An integer that stands for the relevant value.
+//2) Variable Declarations:
+//> max_num: This variable uses the library's max_element function to hold the maximum value found in the nums vector.
+//> count: It records the number of times the maximum number encountered has occurred.
+//> left and right: The window of elements under examination is tracked using these variables as pointers.
+//> The final response, or the number of subarrays that satisfy the specified condition, is stored there.
+//3) Main Loop: Until the right pointer hits the end of the vector, this loop iterates through the nums vector's items.
+//4) Maximal Number Occurrences Checking: The loop determines whether the element at the right pointer right now equals the maximum number that has been encountered (max_num). The count variable is increased if it is.
+//5) Sliding Window Technique: When the count of instances of the maximum number (count) is larger than or equal to k, this inner loop goes into action. Until the count drops below k, it moves the window (right pointer) to the right. The number of valid subarrays is added to the response (ans) while the window is being slid.
+//6) Updating Pointers: To advance the window, the right pointer is increased following the inner loop.
+//7) Returning the Answer: The calculated answer is finally returned by the function.
+
+//cpp code
+
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int k) {
+        long long int max_num = *max_element(nums.begin(),nums.end()),count = 0;
+        long long int left = 0,right = 0,ans = 0;
+        while(right<nums.size()){
+            if(nums[right] == max_num)count++;
+            
+            while(count>=k){
+                if(nums[left]==max_num)count--;
+                left++;
+                ans += nums.size()-right;
+            }    
+            right++;
+        }
+        return ans;
+        
+    }
+};
