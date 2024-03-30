@@ -1,0 +1,41 @@
+//Explanation:
+//1) Class Definition:
+// The public function subarraysWithKDistinct in the class Solution is defined . The arguments for this technique are an integer k and a vector of integers nums.
+//2) subarrays Having K Different Functions:
+//SubarrayAtmostK is a distinct method that is called twice with various values of k inside the subarraysWithKDistinct method. To get the count of subarrays with precisely k different elements, it first computes the number of subarrays with at most k separate elements for both k and k-1, then subtracts the two.
+//3) function subarrayAtmostK:
+//>An integer k and a vector of integers nums are the arguments of the subarrayAtmostK function. In order to track the count of each element in the current subarray, it initializes an unordered map mp. The pointers left and right define the current subarray and ans is used to store the result.
+//> Using the right pointer, the function iterates across the nums array.
+//> It modifies the map mp's count of nums[right].
+//> If there are more than k distinct elements, it then goes into a nested while loop to decrease the window from the left side. The left pointer is moved and the count of nums[left] is decreased by this loop until the number of distinct elements is less than or equal to k.
+//> It refreshes the answer by adding the length of the current subarray (right - left + 1) after changing the window.
+//> In order to extend the window, it finally increments the right pointer and keeps going until the array's end.
+//> The total count of subarrays with at most k unique elements is returned by the function.
+
+//cpp code
+
+class Solution {
+public:
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+       int subMaxEleK = subarrayAtmostK(nums,k);
+       int reducedSubMaxEleK = subarrayAtmostK(nums, k-1);
+       return (subMaxEleK - reducedSubMaxEleK);  
+    }
+
+    int subarrayAtmostK(vector<int> & nums, int k){
+        unordered_map<int,int> mp;
+        int left = 0 , right = 0 , ans = 0 ;
+        while(right < nums.size()){
+            mp[nums[right]]++;
+            while(mp.size() > k){
+                mp[nums[left]]--;
+                if(mp[nums[left]]==0) mp.erase(nums[left]);
+                left++;
+            }
+            ans += right - left + 1;
+            right++;
+        }
+        return ans;
+    }
+
+};
