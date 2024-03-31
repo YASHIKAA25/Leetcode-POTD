@@ -1,0 +1,45 @@
+//Explanation:
+//1) Function Definition: The countSubarrays function and the class Solution are defined. Three parameters are required by the method:
+//> nums: the array of numbers represented by a vector of integers.
+//> minK: an integer that denotes the lowest value that can be present in the subarray.
+//> maxK: an integer that denotes the subarray's maximum value that is permitted.
+//2) Initialization of Variable:
+//> The count of subarrays that satisfy the conditions is the final result, and res is initialized to hold this value.
+//> The initial values of badIdx, leftIdx, and rightIdx are -1. The indices of specific elements inside the array will be tracked by these variables.
+//3) Iterating Through the Elements of the Array: This loop goes through each value in the array nums.
+//4) Checking Conditions and Updating Indices:
+//> The first if condition checks if the current element nums[i] is outside the range [minK, maxK]. If so, it updates the badIdx to the current index.
+//> The second if condition checks if the current element nums[i] is equal to minK. If so, it updates the leftIdx to the current index.
+//> The third if condition checks if the current element nums[i] is equal to maxK. If so, it updates the rightIdx to the current index.
+//5) Counting Subarrays:
+//Calculates the contribution of the current element to the count of subarrays. It adds the maximum of 0 and the minimum of leftIdx and rightIdx minus badIdx to the result res. This essentially counts the number of subarrays ending at the current index and satisfying the conditions.
+//6) Returning Result:
+//After the loop finishes, the final result res is returned, which represents the count of subarrays satisfying the conditions.
+
+
+//cpp code
+
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int minK, int maxK) {
+       long long res = 0;
+       int badIdx = -1, leftIdx = -1 , rightIdx = -1;
+
+       for(int i = 0 ; i < nums.size(); ++i){
+        if(!(minK <= nums[i] && nums[i] <= maxK)){
+            badIdx = i;
+        }
+
+        if(nums[i] == minK){
+            leftIdx = i;
+        }
+
+        if(nums[i] == maxK){
+            rightIdx = i;
+        }
+
+        res += max(0, min(leftIdx , rightIdx) - badIdx);
+       } 
+       return res;
+    }
+};
