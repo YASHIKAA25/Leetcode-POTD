@@ -1,0 +1,25 @@
+//Explanation:
+//1) The class Solution with a public member function lengthOfLastWord, which takes a string s as input and returns an integer (the length of the last word).
+//2) It initializes an integer variable pos to the index of the last character in the string s.
+//3) The while loop moves the pos backwards until it finds the first non-space character or reaches the beginning of the string.
+//4) It initializes an integer variable result to store the length of the last word.
+//5) The while loop continues moving pos backwards and increments result until it finds a space character (indicating the end of the last word) or reaches the beginning of the string.
+//6) Finally, it returns the value of result, which represents the length of the last word in the given string.
+
+//cpp code
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int pos = s.size() - 1;
+        while(pos >= 0 && s[pos] == ' ') pos--;
+
+        int result = 0;
+        while(pos >= 0 && s[pos] != ' ') {
+            pos--;
+            result++;
+        }
+
+        return result;
+    }
+};
