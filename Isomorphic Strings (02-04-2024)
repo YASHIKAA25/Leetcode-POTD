@@ -1,0 +1,25 @@
+//Explanation:
+//1) Function Definition: The public member function isIsomorphic of the class Solution is defined . Two parameters, s and t, both of type string, are required by this function. Indicating whether or not the two input strings are isomorphic, it produces a boolean value.
+//2) Initialization: Two arrays, map_s and map_t, of size 128 are declared inside the isIsomorphic function and are first initialized with zeros. The purpose of these arrays is to hold character mappings between strings s and t. The ASCII values of the characters are used to index the arrays.
+//3) Looping Through the Strings: Next, the function uses a for loop to iterate through the characters in the strings s and t from index 0 to len-1, where len is the strings' length.
+//4) Checking Mapping: For each character at index i, it checks if the mappings in map_s and map_t for the characters s[i] and t[i] respectively are different. If they are different, it means the characters are mapped to different characters in the other string, indicating a non-isomorphic mapping, so the function returns false.
+//5) Updating Mappings: If the mappings are the same, it updates the mappings in map_s and map_t for the characters s[i] and t[i] respectively by assigning i+1 to both. The i+1 is used instead of just i to avoid conflict with the initial zero values, as 0 is a valid value in the mapping arrays.
+//6) Return Value: If the loop completes without finding any non-isomorphic mappings, the function returns true, indicating that the input strings are isomorphic.
+
+//cpp code
+
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        char map_s[128] = { 0 };
+        char map_t[128] = { 0 };
+        int len = s.size();
+        for (int i = 0; i < len; ++i)
+        {
+            if (map_s[s[i]]!=map_t[t[i]]) return false;
+            map_s[s[i]] = i+1;
+            map_t[t[i]] = i+1;
+        }
+        return true; 
+    }
+};
