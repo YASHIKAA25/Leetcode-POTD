@@ -1,0 +1,62 @@
+//Explanation:
+//1) Class Definition:
+//This code defines a class named Solution.
+//2) Public Member Functions:
+//a) dfs Function:
+//This function performs depth-first search (DFS) on the board to find the given word. It takes several parameters:
+//> board: a 2D vector representing the game board.
+//> vis: a 2D vector representing the visited status of cells on the board.
+//> word: a reference to the word that needs to be found on the board.
+//> i and j: the current position on the board.
+//> start: the index of the current character in the word.
+//b) exist Function:
+//This function is the entry point for the solution. It takes the game board (board) and the word to search for (word) as input parameters.
+//3) DFS Algorithm:
+//a) Boundary Conditions:
+//It checks if the current position (i, j) is within the boundaries of the board, if it has been visited before (vis[i][j] is true), or if the character at (i, j) doesn't match the current character of the word. If any of these conditions are met, it returns false.
+//b) Marking Visited Cells:
+//It marks the current cell (i, j) as visited.
+//c) Recursive Calls:
+//It makes recursive calls to search for the next character of the word in the neighboring cells (up, down, left, and right) of the current cell (i, j).
+//d) Backtracking:
+//After exploring all possible paths from the current cell (i, j), it backtracks by marking the current cell as not visited.
+//4) Word Search Loop:
+//It iterates through each cell of the board and checks if the word can be formed starting from that cell using the dfs function. If it finds a starting point where the word can be formed, it returns true. If no such point is found after checking all cells, it returns false.
+
+
+//cpp code
+
+class Solution {
+public:
+    bool dfs(vector<vector<char>>& board, vector<vector<bool>>& vis, string &word, int i, int j, int start) {
+        int m = board.size(), n = board[0].size();
+        if(start == word.size()) return true;
+        if(i < 0 || i >= m || j < 0 || j >= n || vis[i][j] || board[i][j] != word[start]) return false;
+        
+        vis[i][j] = true;
+        bool a = dfs(board, vis, word, i+1, j, start+1) ||
+                 dfs(board, vis, word, i-1, j, start+1) ||
+                 dfs(board, vis, word, i, j+1, start+1) ||
+                 dfs(board, vis, word, i, j-1, start+1);
+        
+        vis[i][j] = false; 
+        return a;
+    }
+
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        int m = board.size();
+        int n = board[0].size();
+        
+        vector<vector<bool>> vis(m, vector<bool>(n, false));
+        
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(dfs(board, vis, word, i, j, 0))
+                    return true;
+            }
+        }
+        
+        return false;
+    }
+};
