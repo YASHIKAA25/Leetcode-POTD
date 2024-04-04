@@ -1,0 +1,28 @@
+//Explanation:
+//1) Class Definition: A class called Solution is defined . There is a public member function called maxDepth in the class. 
+//2) Function Signature: The maxDepth function returns an integer after accepting a single string-type parameter, s.
+//3) Variable Initialization: The count and max_num integer variables are initialized inside the maxDepth function. The maximum depth encountered is stored in max_num, while the current depth (the number of open parentheses encountered thus far) is tracked in count. 
+//4) Loop Through String: A range-based for loop is used by the function to iterate through each character c in the input string s. 
+//5) Counting Parentheses: Within the loop, the code checks if the current character c is an opening parenthesis '('. If it is, the count variable is incremented to indicate an increase in depth. Additionally, if the current max_num is less than count, max_num is updated to count. This step ensures that max_num always contains the maximum depth encountered so far.
+//6) Decreasing Count: If the current character c is a closing parenthesis ')', the count variable is decremented to indicate a decrease in depth.
+//7) Returning Maximum Depth: After looping through all characters in the string, the function returns the max_num, which represents the maximum depth of parentheses nesting encountered in the input string.
+
+//cpp code
+
+class Solution {
+public:
+    int maxDepth(string s) {
+        int count = 0;
+        int max_num = 0;
+        for (char c : s) {
+            if (c == '(') {
+                count++;
+                if (max_num < count)
+                    max_num = count;
+            } else if (c == ')') {
+                count--;
+            }
+        }
+        return max_num;
+    }
+};
