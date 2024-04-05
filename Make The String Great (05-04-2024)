@@ -1,0 +1,28 @@
+//Explanation:
+//1) Class Declaration: The code defines a class named Solution.
+//2) Public Method: Inside the Solution class, there is a public method makeGood.
+//3) Method Signature: The makeGood method takes a single parameter s, which is a string, and returns a string.
+//4) Variable Declaration: Inside the makeGood method, there is a declaration of a string variable res, which will store the result.
+//5) Loop Through Characters: The method iterates through each character c in the input string s.
+//6) Condition Check: For each character c, it checks whether the res string is not empty and if the uppercase version of the current character (toupper(c)) is equal to the uppercase version of the last character in the res string (toupper(res.back())). Additionally, it checks if the difference between the ASCII values of the characters (c - res.back()) is not equal to 0. This condition checks if the current character and the last character in the res string are the same letter but with different cases.
+//7) Updating Result String: If the condition mentioned above is true, it means the current character and the last character in the result string form a pair that needs to be removed according to the problem statement. In this case, the last character in the res string is removed using res.pop_back(). If the condition is false, the current character is appended to the result string using res.push_back(c).
+//8) Return Result: After processing all characters in the input string, the method returns the final result stored in the res string.
+
+//cpp code
+
+class Solution {
+public:
+    string makeGood(string s) 
+    {
+        string res;
+        for (char c : s) {
+            if (!res.empty() && (toupper(c) == toupper(res.back())) && (c - res.back() != 0)) {
+                res.pop_back();
+            } else {
+                res.push_back(c);
+            }
+        }
+        
+        return res;
+    }
+};
