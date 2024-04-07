@@ -1,0 +1,44 @@
+//Explanation:
+//1) Stack Initialization: This line initializes a stack named st. This stack will be used to keep track of the indices of opening parentheses.
+//2) Loop through the String: This loop iterates through each character of the input string s.
+//3) Checking for Opening Parentheses: If the current character is an opening parenthesis '(', its index i is pushed onto the stack st.
+//4) Checking for Closing Parentheses: If the current character is a closing parenthesis ')', the code checks if the stack st is empty. If it's not empty, it means there's a corresponding opening parenthesis. So, it pops the index of the opening parenthesis from the stack. If the stack is empty (i.e., there's no corresponding opening parenthesis), it replaces the closing parenthesis with '*'.
+//5) Handling Unmatched Opening Parentheses: After iterating through the string, if there are any unmatched opening parentheses left in the stack, they are replaced with '*'.
+//6) Constructing Result String: This loop constructs the result string result by appending characters from the input string s if they are not '*'.
+//7) Return Result: Finally, the modified string with removed parentheses to make it valid is returned.
+
+//cpp code
+
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        stack<int> st; 
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '(') {
+                st.push(i);
+            } 
+            else if (s[i] == ')') {
+                if (!st.empty()) {
+                    st.pop(); 
+                } 
+                else {
+                    s[i] = '*'; 
+                }
+            }
+        }
+
+        while (!st.empty()) {
+            s[st.top()] = '*';
+            st.pop();
+        }
+
+        string result = "";
+        for (int i=0 ; i<s.length() ; i++) {
+            if (s[i] != '*') {
+                result += s[i];
+            }
+        }
+
+        return result;
+    }
+};
