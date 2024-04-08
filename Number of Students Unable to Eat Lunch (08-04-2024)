@@ -1,0 +1,33 @@
+//Explanation:
+//1) Define Solution Class: Code defines a class named Solution with a single public member function countStudents. This function takes two parameters: students, a reference to a vector of integers representing the preferences of students, and sandwiches, a reference to a vector of integers representing the sandwiches available.
+//2) Initialize Counts Vector: Creates a vector named counts with a size of 2 and initializes all elements to 0. This vector will be used to keep track of the count of each type of preference among the students. Index 0 represents the count of students who prefer sandwiches of type 0, and index 1 represents the count of students who prefer sandwiches of type 1.
+//3) Count Student Preferences: Loop iterates over each element of the students vector. For each student, it increments the count of the corresponding preference type in the counts vector.
+//4)Initialize Remaining Count: Initializes the variable remaining to the total number of sandwiches available. This variable will be used to keep track of the number of sandwiches that have not been consumed.
+//5) Iterate through Sandwiches: Loop iterates over each element of the sandwiches vector.
+//6) Check if Sandwich Preference Exists: Inside the loop, it checks if there are any sandwiches left of the current preference type (sandwich). If there are no sandwiches left of this type, the loop breaks, indicating that some students will not be able to get their preferred sandwich.
+//7) Check Remaining Sandwiches: Condition checks if there are any remaining sandwiches to be distributed. If there are no sandwiches left, the loop breaks, indicating that all available sandwiches have been distributed.
+//8) Update Counts and Remaining: If there are sandwiches left of the current preference type (sandwich), it decrements the count of that type in the counts vector and decreases the count of remaining sandwiches.
+//9) Return Remaining Count: Finally, the function returns the value of remaining, indicating the number of students who could not get their preferred sandwiches.
+
+//cpp code
+
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        vector<int> counts(2, 0);
+        for (int student : students)
+            counts[student]++;
+
+        int remaining = sandwiches.size();
+        for (int sandwich : sandwiches) {
+            if (counts[sandwich] == 0)
+                break;
+            if (remaining == 0)
+                break;
+            counts[sandwich]--;
+            remaining--;
+        }
+
+        return remaining;
+    }
+};
