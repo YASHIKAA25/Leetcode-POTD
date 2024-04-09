@@ -1,0 +1,23 @@
+//Approach:
+//1) Set up a variable time to keep track of the overall time taken. 
+//2) If the person at position k hasn't purchased all of their tickets, iterate through the queue and allow each person to purchase a ticket. Then, update the queue by decrementing the number of tickets for the person who purchased a ticket. Finally, increment the time by 1 second for each pass.
+//3) Return the total time taken.
+
+//cpp code
+
+class Solution {
+public:
+    int timeRequiredToBuy(vector<int>& tickets, int k) {
+        int total = 0;
+
+        for (int i = 0; i < tickets.size(); ++i) {
+            if (i <= k) {
+                total += min(tickets[i], tickets[k]);
+            } else {
+                total += min(tickets[i], tickets[k] - 1);
+            }
+        }
+
+        return total;
+    }
+};
